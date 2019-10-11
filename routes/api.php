@@ -20,8 +20,8 @@ Route::group([
     'namespace' => 'Api\V1',
     'prefix' => 'v1'
 ], function () {
-    Route::get('user', 'Api\V1\AuthController@user');
-    Route::post('logout', 'Api\V1\AuthController@logout');
+    Route::get('user', 'AuthController@user');
+    Route::post('logout', 'AuthController@logout');
     Route::apiResources([
         'users' => 'UserController',
         'suppliers' => 'SupplierController',

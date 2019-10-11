@@ -85,9 +85,37 @@ class ProductController extends Controller
             $category->name = $request->name;
         }
 
-        $category->save();
+        if ($request->has('desc')) {
+            $request->validate([
+                'desc' => 'nullable'
+            ]);
+            $product->desc = $request->desc;
+        }
 
-        return $category;
+        if ($request->has('category_id')) {
+            $request->validate([
+                'category_id' => 'required|integer'
+            ]);
+            $product->category_id = $request->category_id;
+        }
+
+        if ($request->has('price_purchase')) {
+            $request->validate([
+                'price_purchase' => 'required|numeric'
+            ]);
+            $product->price_purchase = $request->price_purchase;
+        }
+
+        if ($request->has('stock')) {
+            $request->validate([
+                'stock' => 'nullable|numeric|min:1'
+            ]);
+            $product->stock = $request->stock;
+        }
+
+        $product->save();
+
+        return $product;
     }
 
     /**
@@ -101,7 +129,7 @@ class ProductController extends Controller
         Category::destroy($id);
 
         return response()->json([
-            'message' => 'success delete category data'
+            'message' => 'success delete product data'
         ], 200);
     }
 }
